@@ -2,7 +2,7 @@ import unittest
 from unittest import mock, TestCase
 from src.models.round_class import Round
 from src.models.person_class import Person
-
+# test comment
 class Test_Round(TestCase):
     def test_round_add_all_preferences_method(self):
         # Arrange
