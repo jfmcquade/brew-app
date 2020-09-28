@@ -28,19 +28,6 @@ def add_elements(new_elements, data):
         data.append(element)
     return data
 
-def test_add_elements():
-    # Arrange
-    new_elements = "John, Paul, George, Ringo"
-    data = ["George Martin"]
-    expected = ["George Martin", "John", "Paul", "George", "Ringo"]
-
-    # Act
-    actual = add_elements(new_elements, data)
-
-    # Assert
-    assert expected == actual
-
-
 def remove_drink(drinks):
     get_drinks(drinks)
     try:

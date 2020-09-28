@@ -19,8 +19,34 @@ class Test_Round(TestCase):
         # Assert
         self.assertEqual(test_round.orders, preferences)
 
+    @mock.patch("builtins.input")
+    def test_round_add_to_round_method(self, mock_input):
+        # Arrange
+        people = ["Person A", "Person B"]
+        drinks = ["Drink 1", "Drink 2"]
+        preferences = {}
 
-# def test_round_add_to_round_method():
-#     # Arrange
-#     people = ["Person A", "Person B"]
-#     drinks = ["Drink 1", "Drink 2"]
+
+   
+def add_to_round(self, people, drinks, preferences):
+    try:
+        main.get_people(people)
+        chosen_person = people[int(input("\nPlease enter the number for a person of your choice:\n")) - 1]
+        add_to_round_input = input(f"\nWould you like to:\n\n[1] Add {chosen_person.name}'s stored preference\n[2] Select drink manually\n")
+        if add_to_round_input == "1":
+            # Add person's preference
+            try:
+                self.orders[chosen_person.name] = chosen_person.preference
+                print(f"\n{chosen_person.name}'s order of {chosen_person.preference} has been added to the round.")
+            except:
+                print("\nThis person does not have a preference stored.")
+        elif add_to_round_input == "2":
+            main.get_drinks(drinks)
+            chosen_drink = drinks[int(input("\nPlease enter the number for a drink of your choice:\n")) - 1]
+            self.orders[chosen_person.name] = chosen_drink
+            print("\nOrder added to round.")
+        else:
+            print("Please enter a valid selection.")
+        return self.orders
+    except:
+        print("\nPlease try again, make sure you enter a valid number in each case.")
