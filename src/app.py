@@ -40,6 +40,7 @@ def save_all():
     saver.save_list_of_person_instances_to_csv("./data/people.csv", people)
     saver.save_list_to_file("./data/drinks.txt", drinks)
     # saver.save_dict_to_csv("./data/preferences.csv", preferences)
+    saver.save_drinks_list_to_db(drinks)
     print("\nYour changes have been saved.")
 
 

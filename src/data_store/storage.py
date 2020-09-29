@@ -1,4 +1,5 @@
 import csv
+import pymysql
 from src.models.person_class import Person
 
 def wait():
@@ -86,6 +87,14 @@ class File_Handling:
             print(f"An error occurred when trying to save to {filepath}.")
             wait()
 
+    def save_drinks_list_to_db(self, drinks):
+        connection = pymysql.connect(host = "localhost", port = 33066, user = "root", password = "password", db = "BrewApp")
+        cursor = connection.cursor()
+        for drink in drinks:
+            cursor.execute("INSERT INTO Drinks (drink_name) VALUES (%s)", drink)
+        connection.commit()
+        cursor.close()
+        connection.close()
 
 # test_list = [Person("Johnny", "tea"), Person("Ross", "squash")]
 
