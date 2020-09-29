@@ -2,11 +2,8 @@ import unittest
 from unittest import mock, TestCase
 from src.models.round_class import Round
 from src.models.person_class import Person
-# test comment
-# test comment 2  
-# This was made on test_branch
-# This comment was made on test-branch-2
-# test comment 2
+
+
 class Test_Round(TestCase):
     def test_round_add_all_preferences_method(self):
         # Arrange
@@ -19,34 +16,45 @@ class Test_Round(TestCase):
         # Assert
         self.assertEqual(test_round.orders, preferences)
 
-    @mock.patch("builtins.input")
-    def test_round_add_to_round_method(self, mock_input):
+    # @mock.patch("src.models.round_class.Round")
+    def test_add_persons_preference_to_round_pref_exists(self):
         # Arrange
-        people = ["Person A", "Person B"]
-        drinks = ["Drink 1", "Drink 2"]
-        preferences = {}
+        chosen_person = mock.Mock(Person)
+        chosen_person.name = "Johnny"
+        chosen_person.preference = "tea"
+        
+        test_round = Round(chosen_person)
 
+        expected_order = {"Johnny": "tea"}
 
-   
-def add_to_round(self, people, drinks, preferences):
-    try:
-        main.get_people(people)
-        chosen_person = people[int(input("\nPlease enter the number for a person of your choice:\n")) - 1]
-        add_to_round_input = input(f"\nWould you like to:\n\n[1] Add {chosen_person.name}'s stored preference\n[2] Select drink manually\n")
-        if add_to_round_input == "1":
-            # Add person's preference
-            try:
-                self.orders[chosen_person.name] = chosen_person.preference
-                print(f"\n{chosen_person.name}'s order of {chosen_person.preference} has been added to the round.")
-            except:
-                print("\nThis person does not have a preference stored.")
-        elif add_to_round_input == "2":
-            main.get_drinks(drinks)
-            chosen_drink = drinks[int(input("\nPlease enter the number for a drink of your choice:\n")) - 1]
-            self.orders[chosen_person.name] = chosen_drink
-            print("\nOrder added to round.")
-        else:
-            print("Please enter a valid selection.")
-        return self.orders
-    except:
-        print("\nPlease try again, make sure you enter a valid number in each case.")
+        # Act
+        test_round.add_persons_preference_to_round(chosen_person)
+
+        #Assert
+        self.assertEqual(test_round.orders, expected_order)
+
+    # @mock.patch("builtins.print")
+    # def test_add_persons_preference_to_round_pref_doesnt_exist(self, mock_print):
+    #     # Arrange
+    #     chosen_person = mock.Mock(Person)
+    #     chosen_person.name = "Johnny"
+    #     chosen_person.preference = ""
+        
+    #     test_round = Round(chosen_person)
+
+    #     mock_print.return_value = 123
+    #     expected_output = 123
+
+    #     # Act
+    #     actual_output = test_round.add_persons_preference_to_round(chosen_person)
+
+    #     #Assert
+    #     self.assertEqual(actual_output, expected_output)
+
+# def add_persons_preference_to_round(self, chosen_person):
+#     try:
+#         self.orders[chosen_person.name] = chosen_person.preference
+#         print(f"\n{chosen_person.name}'s order of {chosen_person.preference} has been added to the round.")
+#         return self.orders
+#     except:
+#         print("\nThis person does not have a preference stored.")

@@ -48,6 +48,13 @@ def remove_person(people):
     except:
         print("\nPlease enter a valid number.")
 
+def add_persons_preference_to_round(chosen_person):
+    try:
+        self.orders[chosen_person.name] = chosen_person.preference
+        print(f"\n{chosen_person.name}'s order of {chosen_person.preference} has been added to the round.")
+    except:
+        print("\nThis person does not have a preference stored.")
+
 # def remove_element(data_name, list_var):
 #     try:
 #         element_number = int(input(f"\nPlease enter the number of the {data_name} you would like to remove:\n")) - 1

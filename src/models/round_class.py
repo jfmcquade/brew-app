@@ -34,23 +34,29 @@ class Round:
             self.orders[person] = drink
 
     # self.orders[name] = preferences[name]
+
+    def add_persons_preference_to_round(self, chosen_person):
+        if chosen_person.preference != "":
+            self.orders[chosen_person.name] = chosen_person.preference
+            print(f"\n{chosen_person.name}'s order of {chosen_person.preference} has been added to the round.")
+        else:
+            print(f"\n{chosen_person.name} does not have a preference stored.")
+
+    def add_selected_drink_to_round(self, drinks, chosen_person):
+        main.get_drinks(drinks)
+        chosen_drink = drinks[int(input("\nPlease enter the number for a drink of your choice:\n")) - 1]
+        self.orders[chosen_person.name] = chosen_drink
+        print("\nOrder added to round.")
+
     def add_to_round(self, people, drinks, preferences):
         try:
             main.get_people(people)
             chosen_person = people[int(input("\nPlease enter the number for a person of your choice:\n")) - 1]
             add_to_round_input = input(f"\nWould you like to:\n\n[1] Add {chosen_person.name}'s stored preference\n[2] Select drink manually\n")
             if add_to_round_input == "1":
-                # Add person's preference
-                try:
-                    self.orders[chosen_person.name] = chosen_person.preference
-                    print(f"\n{chosen_person.name}'s order of {chosen_person.preference} has been added to the round.")
-                except:
-                    print("\nThis person does not have a preference stored.")
+                self.add_persons_preference_to_round(chosen_person)
             elif add_to_round_input == "2":
-                main.get_drinks(drinks)
-                chosen_drink = drinks[int(input("\nPlease enter the number for a drink of your choice:\n")) - 1]
-                self.orders[chosen_person.name] = chosen_drink
-                print("\nOrder added to round.")
+                self.add_selected_drink_to_round(drinks, chosen_person)
             else:
                 print("Please enter a valid selection.")
             return self.orders
