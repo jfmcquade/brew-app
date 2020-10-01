@@ -5,6 +5,9 @@ from src.models.person_class import Person
 def wait():
     input("\nPress ENTER to return to the menu.")
 
+def get_connection():
+  return pymysql.connect(host = "localhost", port = 33066, user = "root", password = "password", db = "BrewApp")
+
 class File_Handling:
     def __init__(self, name):
         self.name = name
@@ -55,6 +58,20 @@ class File_Handling:
         except:
             print("An error occurred")
             wait()
+    
+    # def load_drinks_from_db(self, people):
+    #     connection = get_connection()
+    #     cursor = connection.cursor()
+    #     cursor.execute("SELECT drinkID FROM Drinks")
+    #     connection.commit()
+    #     rows = cursor.fetchall()
+    #     cursor.close()
+    #     connection.close()
+        
+    #     for row in rows:
+    #         print(row)
+
+    #     return
 
     def save_dict_to_csv(self, filepath, dict_name):
         try:
@@ -88,7 +105,7 @@ class File_Handling:
             wait()
 
     def save_drinks_list_to_db(self, drinks):
-        connection = pymysql.connect(host = "localhost", port = 33066, user = "root", password = "password", db = "BrewApp")
+        connection = get_connection()
         cursor = connection.cursor()
         for drink in drinks:
             cursor.execute("INSERT INTO Drinks (drink_name) VALUES (%s)", drink)
@@ -96,6 +113,17 @@ class File_Handling:
         cursor.close()
         connection.close()
 
+    def save_people_list_to_db(self, people):
+        connection = get_connection()
+        cursor = connection.cursor()
+        for person in people:
+            person_list_of_attributes = [person.name, person.preference]
+            cursor.execute("INSERT INTO People (name, preference) VALUES (%s, %s)", person_list_of_attributes)
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+    
 # test_list = [Person("Johnny", "tea"), Person("Ross", "squash")]
 
 # class_list_saver = File_Handling("class_list_saver")

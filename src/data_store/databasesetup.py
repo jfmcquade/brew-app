@@ -6,7 +6,6 @@ def add_drink_to_mysql():
     args = ("tea")
     cursor.execute("INSERT INTO Drinks (drink_name) VALUES (%s)", args)
     connection.commit()
-
     cursor.close()
     connection.close()
 

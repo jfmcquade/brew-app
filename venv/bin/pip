@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/Work/Desktop/Data Engineering/BrewApp/venv/bin/python3" "$0" "$@"
+'''exec' "/Users/Work/Desktop/Data Engineering/BrewApp/venv/bin/python" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

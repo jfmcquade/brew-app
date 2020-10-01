@@ -41,6 +41,7 @@ def save_all():
     saver.save_list_to_file("./data/drinks.txt", drinks)
     # saver.save_dict_to_csv("./data/preferences.csv", preferences)
     saver.save_drinks_list_to_db(drinks)
+    saver.save_people_list_to_db(people)
     print("\nYour changes have been saved.")
 
 
