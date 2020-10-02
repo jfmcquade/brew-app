@@ -35,6 +35,7 @@ def add_person(new_names, people):
         av_id = available_person_id(people)
         person = Person(av_id, name)
         people.append(person)
+        pr
     return people
 
 def add_elements(new_elements, data):
