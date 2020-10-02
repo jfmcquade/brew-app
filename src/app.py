@@ -25,11 +25,13 @@ EXIT_CMD = "x"
 people = []
 drinks = []
 preferences = {}
+deleted_people = []
 
 # Load data into lists, dictionary
 def load_all_data():
     loader = storage.File_Handling("loader")
-    loader.load_people_from_csv("./data/people.csv", people)
+    # loader.load_people_from_csv("./data/people.csv", people)
+    loader.load_people_from_db(people)
     loader.list_from_file("./data/drinks.txt", drinks)
     # loader.dict_from_csv("./data/preferences.csv", preferences)
     main.dict_from_preferences(people, preferences)
@@ -41,7 +43,7 @@ def save_all():
     saver.save_list_to_file("./data/drinks.txt", drinks)
     # saver.save_dict_to_csv("./data/preferences.csv", preferences)
     saver.save_drinks_list_to_db(drinks)
-    saver.save_people_list_to_db(people)
+    saver.save_people_list_to_db(people, deleted_people)
     print("\nYour changes have been saved.")
 
 
@@ -118,7 +120,7 @@ def main_menu():
         print("\nDrink(s) added to list.")
         wait()
     elif command == REMOVE_PERSON_CMD:
-        main.remove_person(people)
+        main.remove_person(people, deleted_people)
         wait()
     elif command == REMOVE_DRINK_CMD:
         main.remove_drink(drinks)

@@ -12,6 +12,19 @@ class File_Handling:
     def __init__(self, name):
         self.name = name
 
+    def load_people_from_db(self, people):
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM People")
+        connection.commit()
+        rows = cursor.fetchall()
+        cursor.close()
+        connection.close()
+        for row in rows:
+            person = Person(row[0], row[1], row[2])
+            people.append(person)
+        return people
+
     def list_from_file(self, filepath, list_name):
         file_var = open(filepath, "r")
         file_list = file_var.readlines()
@@ -58,20 +71,6 @@ class File_Handling:
         except:
             print("An error occurred")
             wait()
-    
-    # def load_drinks_from_db(self, people):
-    #     connection = get_connection()
-    #     cursor = connection.cursor()
-    #     cursor.execute("SELECT drinkID FROM Drinks")
-    #     connection.commit()
-    #     rows = cursor.fetchall()
-    #     cursor.close()
-    #     connection.close()
-        
-    #     for row in rows:
-    #         print(row)
-
-    #     return
 
     def save_dict_to_csv(self, filepath, dict_name):
         try:
@@ -108,22 +107,43 @@ class File_Handling:
         connection = get_connection()
         cursor = connection.cursor()
         for drink in drinks:
-            cursor.execute("INSERT INTO Drinks (drink_name) VALUES (%s)", drink)
+            cursor.execute(f'''INSERT INTO Drinks (drink_name) VALUES ("{drink}") ON DUPLICATE KEY UPDATE drink_name="{drink}"''')
         connection.commit()
         cursor.close()
         connection.close()
 
-    def save_people_list_to_db(self, people):
+    def save_people_list_to_db(self, people, deleted_people):
         connection = get_connection()
         cursor = connection.cursor()
         for person in people:
-            person_list_of_attributes = [person.name, person.preference]
-            cursor.execute("INSERT INTO People (name, preference) VALUES (%s, %s)", person_list_of_attributes)
+            person_list_of_attributes = [person.person_id, person.name, person.preference]
+            cursor.execute(f'''INSERT INTO People (person_id, name, preference) VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE name="{person.name}"''', person_list_of_attributes)
+        for person in deleted_people:
+            person_list_of_attributes = [person.person_id, person.name, person.preference]
+            cursor.execute(f'''DELETE FROM People WHERE person_id={person.person_id} AND name="{person.name}"''')
         connection.commit()
         cursor.close()
         connection.close()
 
-    
+
+
+
+    # def load_drinks_from_db(self, people):
+    #     connection = get_connection()
+    #     cursor = connection.cursor()
+    #     cursor.execute("SELECT drinkID FROM Drinks")
+    #     connection.commit()
+    #     rows = cursor.fetchall()
+    #     cursor.close()
+    #     connection.close()
+        
+    #     for row in rows:
+    #         print(row)
+
+    #     return
+
+
+
 # test_list = [Person("Johnny", "tea"), Person("Ross", "squash")]
 
 # class_list_saver = File_Handling("class_list_saver")

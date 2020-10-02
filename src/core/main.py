@@ -17,10 +17,23 @@ def get_people(people):
 def get_drinks(drinks: List[str]):
     table.tabulate("drinks", drinks)
 
+def available_person_id(people):
+    av_id = len(people) + 1
+    people_ids = [person.person_id for person in people]
+    for i in range(1, len(people) + 1):
+        if i not in people_ids:
+            av_id = i
+            break
+        else:
+            continue
+    return av_id
+
+
 def add_person(new_names, people):
     new_names_list = [name.strip() for name in new_names.split(",")]
     for name in new_names_list:
-        person = Person(name)
+        av_id = available_person_id(people)
+        person = Person(av_id, name)
         people.append(person)
     return people
 
@@ -40,12 +53,13 @@ def remove_drink(drinks):
     except:
         print("\nPlease enter a valid number.")
 
-def remove_person(people):
+def remove_person(people, deleted_people):
     get_people(people)
     try:
         element_number = int(input("\nPlease enter the number of the person you would like to remove:\n")) - 1
+        deleted_people.append(people[element_number])
         people.pop(element_number)
-        print("\nPerson was successfully removed.")
+        print(f"\n{deleted_people[-1].name} was successfully removed.")
         return people
     except:
         print("\nPlease enter a valid number.")
