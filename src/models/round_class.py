@@ -1,21 +1,15 @@
 import src.core.main as main
 from src.models.person_class import Person
 
-active_round = None
+# active_round = None
 
 class Round:
     def __init__(self, round_owner: Person):
         # self.name = f"{round_owner.name}'s Round"
         self.owner = round_owner
-        self.active = active_round == self
+        # self.active = active_round == self
         self.orders = {} # name:drink
-#         self.round_menu_text = f"""\nPlease enter a number to select from the options below:
 
-# [1] Add an order to the round, "{round_owner.name}'s Round".
-# [2] Populate "{round_owner.name}'s Round" with all saved preferences
-# [3] Print "{round_owner.name}'s Round".
-# [4] Return to menu
-# """
     def round_menu_text(self, round_owner: Person):
         round_menu_text = f"""\nPlease enter a number to select from the options below:
 
@@ -25,15 +19,14 @@ class Round:
 [4] Return to menu
 """
         return round_menu_text
-    def activate_round(self):
-        active_round = self
-        return active_round
+    
+    # def activate_round(self):
+    #     active_round = self
+    #     return active_round
 
     def add_all_preferences(self, preferences):
         for person, drink in preferences.items():
             self.orders[person] = drink
-
-    # self.orders[name] = preferences[name]
 
     def add_persons_preference_to_round(self, chosen_person):
         if chosen_person.preference != "":
