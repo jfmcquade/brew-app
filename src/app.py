@@ -7,27 +7,15 @@ import src.data_store.storage as storage
 
 app_name = "TeaRun 1.0"
 
-# Define commands
-GET_PEOPLE_CMD = "1"
-GET_DRINKS_CMD = "2"
-ADD_PEOPLE_CMD = "3"
-ADD_DRINKS_CMD = "4"
-REMOVE_PERSON_CMD = "5"
-REMOVE_DRINK_CMD = "6"
-LINK_PERSON_DRINK_CMD = "7"
-GET_PREFERENCES_CMD = "8"
-MAKE_ROUND_CMD = "9"
-SAVE_CMD = "s"
-EXIT_CMD = "x"
 
-
-# Saving and loading
+# SAVING AND LOADING
+# Setting up variables
 people = []
 drinks = []
 preferences = {}
 deleted_people = []
 
-# Load data into lists, dictionary
+# Load data from database into lists, dictionary
 def load_all_data():
     loader = storage.File_Handling("loader")
     # loader.load_people_from_csv("./data/people.csv", people)
@@ -36,7 +24,7 @@ def load_all_data():
     # loader.dict_from_csv("./data/preferences.csv", preferences)
     main.dict_from_preferences(people, preferences)
 
-# Save people and drinks to file
+# Save people and drinks to files and database
 def save_all():
     saver = storage.File_Handling("saver")
     saver.save_list_of_person_instances_to_csv("./data/people.csv", people)
@@ -47,7 +35,103 @@ def save_all():
     print("\nYour changes have been saved.")
 
 
-# Rounds
+def wait():
+    input("\nPress ENTER to return to the menu.")
+
+def invalid_input(command):
+    print(f"'{command}' does not refer to a command in the menu. Please enter a valid command.")
+    wait()
+
+# PEOPLE MENU
+people_menu_text = """
+Please enter a number to select from the options below:
+
+[1] Add people
+[2] Remove people
+[3] Return to main menu
+
+Enter your selection:"""
+
+def people_menu():
+    while True:
+        main.clear_screen()
+        main.get_people(people)
+        print(people_menu_text)
+        command = input()
+        if command == "1":
+            main.clear_screen()
+            main.add_person(people)
+            wait()
+        elif command == "2":
+            main.clear_screen()
+            main.remove_person(people, deleted_people)
+            wait()
+        elif command == "3":
+            break
+        else:
+            invalid_input(command)
+        
+# DRINKS MENU
+drinks_menu_text = """
+Please enter a number to select from the options below:
+
+[1] Add drinks
+[2] Remove drinks
+[3] Return to main menu
+
+Enter your selection:"""
+
+def drinks_menu():
+    while True:
+        main.clear_screen()
+        main.get_drinks(drinks)
+        print(drinks_menu_text)
+        command = input()
+        if command == "1":
+            main.clear_screen()
+            main.add_drinks(drinks)
+            wait()
+        elif command == "2":
+            main.clear_screen()
+            main.remove_drink(drinks)
+            wait()
+        elif command == "3":
+            break
+        else:
+            invalid_input(command)
+
+# PREFERENCES MENU
+preferences_menu_text = """
+Please enter a number to select from the options below:
+
+[1] Add a person's preference
+([2] Remove a person's preference)
+[3] Return to main menu
+
+Enter your selection:"""
+
+def preferences_menu():
+    while True:
+        main.clear_screen()
+        main.get_preferences(preferences)
+        print(preferences_menu_text)
+        command = input()
+        if command == "1":
+            main.clear_screen()
+            main.assign_preference(people, drinks, preferences)
+            wait()
+        elif command =="2":
+            main.clear_screen()
+            print("This feature has not yet been implemented.")
+            wait()
+        elif command == "3":
+            break
+        else:
+            invalid_input(command)
+
+# ROUND MENU
+active_round = None
+
 def make_round(round_owner): 
     print(f"\nNew round, \"{round_owner.name}'s Round\", created.")
     return Round(round_owner)
@@ -57,80 +141,61 @@ def round_menu():
     main.get_people(people)
     round_owner = people[int(input("\nWho is making this round? Please select from the people above using the relevant number:\n")) - 1]
     new_round = make_round(round_owner)
-    print(new_round.round_menu_text(round_owner))
     while True:
+        main.clear_screen()
+        print(new_round.round_menu_text(round_owner))
         command = input()
         if command == "1":
+            main.clear_screen()
             new_round.add_to_round(people, drinks, preferences)
-            print(new_round.round_menu_text(round_owner))
+            wait()
         elif command == "2":
+            main.clear_screen()
             new_round.add_all_preferences(preferences)
-            print("\nPreferences added to round.")
-            print(new_round.round_menu_text(round_owner))
+            wait()
         elif command == "3":
+            main.clear_screen()
             table.tabulate_dict(new_round.owner.name, new_round.orders)
-            print(new_round.round_menu_text(round_owner))
+            wait()
         elif command == "4":
-            print(main_menu_text)
             break
         else:
-            print("\nPlease enter a valid command.")
-            print(new_round.round_menu_text(round_owner))
+            invalid_input(command)
 
 
-# User input setup
-print(f"Welcome to {app_name}!" )
+# MAIN MENU
+# Define commands
+PEOPLE_MENU_CMD = "1"
+DRINKS_MENU_CMD = "2"
+PREFERENCES_MENU_CMD = "3"
+MAKE_ROUND_CMD = "4"
+SAVE_CMD = "s"
+EXIT_CMD = "x"
+
+print(f"\nWelcome to {app_name}!" )
 
 main_menu_text = """
 Please enter a number to select from the options below:
 
-[1] Show people
-[2] Show drinks
-[3] Add people
-[4] Add drinks
-[5] Remove person
-[6] Remove drink
-[7] Add a person's drink preference
-[8] Show drink preferences
-[9] Make a round
+[1] View/edit people
+[2] View/edit drinks
+[3] View/edit preferences
+[4] Make a round
 [s] Save
 [x] Exit
 
 Enter your selection:"""
 
-print(main_menu_text)
-
-def wait():
-    input("\nPress ENTER to return to the menu.")
-
 def main_menu():
+    main.clear_screen()
+    print(main_menu_text)
     command = input()
-    if command == GET_PEOPLE_CMD:
-        main.get_people(people)
-        wait()
-    elif command == GET_DRINKS_CMD:
-        main.get_drinks(drinks)
-        wait()
-    elif command == ADD_PEOPLE_CMD:
-        main.add_person(input("\nEnter the names of people to add, separated by commas:\n"), people)
-        print("\nName(s) added to list.")
-        wait()
-    elif command == ADD_DRINKS_CMD:
-        main.add_elements(input("\nEnter the names of drinks to add, separated by commas:\n"), drinks)
-        print("\nDrink(s) added to list.")
-        wait()
-    elif command == REMOVE_PERSON_CMD:
-        main.remove_person(people, deleted_people)
-        wait()
-    elif command == REMOVE_DRINK_CMD:
-        main.remove_drink(drinks)
-        wait()
-    elif command == LINK_PERSON_DRINK_CMD:
-        main.assign_preference(people, drinks, preferences)
-        wait()
-    elif command == GET_PREFERENCES_CMD:
-        main.get_preferences(preferences)
-        wait()
+    if command == PEOPLE_MENU_CMD:
+        people_menu()
+    elif command == DRINKS_MENU_CMD:
+        drinks_menu()    
+    elif command == PREFERENCES_MENU_CMD:
+        preferences_menu()
     elif command == MAKE_ROUND_CMD:
         round_menu()
     elif command == SAVE_CMD:
@@ -140,8 +205,8 @@ def main_menu():
         print("\nExiting the programme, goodbye!\n")
         exit()
     else:
-        print("\nPlease enter the number for a valid command.")
-    print(main_menu_text)
+        invalid_input(command)
+
 
 def start_app():
     try:

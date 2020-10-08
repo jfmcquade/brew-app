@@ -10,16 +10,20 @@ def get_width(title, data):
 def tabulate(title, data): # Adds numbers
     width = get_width(title, data)
     border = "+" + ("=" * width) + "+"
-    print(f"{border}\n| {str(title).upper()}\n{border}")
+    print(f"\n{border}\n| {str(title).upper()}\n{border}")
     data_enum = list(enumerate(data, 1))
     for a_tuple in data_enum:
-        print("| " + str(a_tuple[0]) + " " + str(a_tuple[1]) + (" " * (width - len(str(a_tuple[0]) + str(a_tuple[1])) - 2)) + "|")
+        if a_tuple[0] < 10:
+            spacer = "  "
+        else:
+            spacer = " "
+        print("| " + str(a_tuple[0]) + spacer + str(a_tuple[1]) + (" " * (width - len(str(a_tuple[0]) + str(a_tuple[1])) - 1 - len(spacer))) + "|")
     print(border)
 
 def tabulate_dict(title, data): # Does not add numbers
     width = get_width(title, list_from_dict(data))
     border = "+" + ("=" * width) + "+"
-    print(f"{border}\n| {str(title).upper()}\n{border}")
+    print(f"\n{border}\n| {str(title).upper()}\n{border}")
     for key, value in data.items():
         print("| " + str(key) + ": " + value + " " * (width - len(str(key) + str(value)) - 3) + "|")
     print(border)

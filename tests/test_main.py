@@ -18,8 +18,8 @@ class Test_Main_Functions(TestCase):
     
     def test_dict_from_preferences(self):
         # Arrange
-        person1 = Person("name 1", "preference 1")
-        person2 = Person("name 2")
+        person1 = Person(1, "name 1", "preference 1")
+        person2 = Person(2, "name 2")
         people = [person1, person2]
         preferences = {}
         expected_output = {"Name 1": "preference 1"}

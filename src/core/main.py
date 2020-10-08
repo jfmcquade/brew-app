@@ -29,13 +29,14 @@ def available_person_id(people):
     return av_id
 
 
-def add_person(new_names, people):
+def add_person(people):
+    new_names = input("\nEnter the names of people to add, separated by commas:\n")
     new_names_list = [name.strip() for name in new_names.split(",")]
     for name in new_names_list:
         av_id = available_person_id(people)
         person = Person(av_id, name)
         people.append(person)
-        pr
+    print("\nSuccessfully added people.")
     return people
 
 def add_elements(new_elements, data):
@@ -43,6 +44,11 @@ def add_elements(new_elements, data):
     for element in new_elements_list:
         data.append(element)
     return data
+
+def add_drinks(drinks):
+    new_elements = input("\nEnter the names of drinks to add, separated by commas:\n")
+    add_elements(new_elements, drinks)
+    print("\nDrink(s) added to list.")
 
 def remove_drink(drinks):
     get_drinks(drinks)

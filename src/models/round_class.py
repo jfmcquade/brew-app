@@ -27,6 +27,7 @@ class Round:
     def add_all_preferences(self, preferences):
         for person, drink in preferences.items():
             self.orders[person] = drink
+        print("\nAll stored preferences added to round.")
 
     def add_persons_preference_to_round(self, chosen_person):
         if chosen_person.preference != "":
@@ -43,12 +44,16 @@ class Round:
 
     def add_to_round(self, people, drinks, preferences):
         try:
+            main.clear_screen()
             main.get_people(people)
-            chosen_person = people[int(input("\nPlease enter the number for a person of your choice:\n")) - 1]
-            add_to_round_input = input(f"\nWould you like to:\n\n[1] Add {chosen_person.name}'s stored preference\n[2] Select drink manually\n")
+            chosen_person = people[int(input("\nPlease enter the number for a person whose order you would like to add:\n")) - 1]
+            main.clear_screen()
+            add_to_round_input = input(f"\nWould you like to:\n\n[1] Add {chosen_person.name}'s stored preference\n[2] Select drink manually\n\nEnter your selection:")
             if add_to_round_input == "1":
+                main.clear_screen()
                 self.add_persons_preference_to_round(chosen_person)
             elif add_to_round_input == "2":
+                main.clear_screen()
                 self.add_selected_drink_to_round(drinks, chosen_person)
             else:
                 print("Please enter a valid selection.")
