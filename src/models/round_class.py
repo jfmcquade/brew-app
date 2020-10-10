@@ -5,7 +5,7 @@ from src.models.person_class import Person
 
 class Round:
     def __init__(self, round_owner: Person):
-        # self.name = f"{round_owner.name}'s Round"
+        self.name = f"{round_owner.name}'s Round"
         self.owner = round_owner
         # self.active = active_round == self
         self.orders = {} # name:drink
@@ -13,10 +13,12 @@ class Round:
     def round_menu_text(self, round_owner: Person):
         round_menu_text = f"""\nPlease enter a number to select from the options below:
 
-[1] Add an order to the round, "{round_owner.name}'s Round".
-[2] Populate "{round_owner.name}'s Round" with all saved preferences
-[3] Print "{round_owner.name}'s Round".
+[1] Add an order to "{self.name}".
+[2] Populate "{self.name}" with all saved preferences
+[3] Print "{self.name}".
 [4] Return to menu
+
+Enter your selection:
 """
         return round_menu_text
     

@@ -106,12 +106,14 @@ def dict_from_preferences(people, preferences):
 def assign_preference(people: List[Person], drinks: List[str], preferences: Dict):
     try:
         get_people(people)
-        chosen_person = int(input("\nPlease enter the number for a person of your choice:\n")) - 1
+        chosen_person = people[int(input("\nPlease enter the number for a person whose drink preference you wish to add:\n")) - 1]
+        clear_screen()
         get_drinks(drinks)
-        chosen_drink = int(input("\nPlease enter the number for a drink of your choice:\n")) - 1
-        people[chosen_person].preference = drinks[chosen_drink]
+        chosen_drink = int(input(f"\nPlease enter the number for a drink to add it as {chosen_person.name}'s preference:\n")) - 1
+        chosen_person.preference = drinks[chosen_drink]
         dict_from_preferences(people, preferences)
-        print("\nThis drink preference has been registered.")
+        clear_screen()
+        print(f"\n{chosen_person.name}'s preference of {drinks[chosen_drink]} has been added.")
         return preferences
     except:
         print("\nPlease try again, make sure you enter a valid number in each case.")

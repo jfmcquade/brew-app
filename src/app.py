@@ -1,11 +1,13 @@
 
 import src.core.table as table
 import src.core.main as main
+import src.core.animation as animation
 from src.models.round_class import Round
 from src.models.person_class import Person
 import src.data_store.storage as storage
+import time
 
-app_name = "TeaRun 1.0"
+
 
 
 # SAVING AND LOADING
@@ -26,6 +28,7 @@ def load_all_data():
 
 # Save people and drinks to files and database
 def save_all():
+    main.clear_screen()
     saver = storage.File_Handling("saver")
     saver.save_list_of_person_instances_to_csv("./data/people.csv", people)
     saver.save_list_to_file("./data/drinks.txt", drinks)
@@ -155,7 +158,7 @@ def round_menu():
             wait()
         elif command == "3":
             main.clear_screen()
-            table.tabulate_dict(new_round.owner.name, new_round.orders)
+            table.tabulate_dict(new_round.name, new_round.orders)
             wait()
         elif command == "4":
             break
@@ -172,9 +175,11 @@ MAKE_ROUND_CMD = "4"
 SAVE_CMD = "s"
 EXIT_CMD = "x"
 
-print(f"\nWelcome to {app_name}!" )
+
 
 main_menu_text = """
+Main Menu
+
 Please enter a number to select from the options below:
 
 [1] View/edit people
@@ -209,6 +214,10 @@ def main_menu():
 
 
 def start_app():
+    while True:
+        animation.welcome_animation(5)
+        # input("\nPress ENTER to continue")
+        break
     try:
         load_all_data()
     except:
