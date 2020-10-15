@@ -3,5 +3,9 @@ beer
 kefir
 OJ
 slime
-Onion juice
 Um Bongo
+black tea
+black coffee
+milky tea
+milky coffee
+green tea

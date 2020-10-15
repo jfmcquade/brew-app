@@ -66,6 +66,7 @@ def remove_person(people, deleted_people):
         element_number = int(input("\nPlease enter the number of the person you would like to remove:\n")) - 1
         deleted_people.append(people[element_number])
         people.pop(element_number)
+        clear_screen()
         print(f"\n{deleted_people[-1].name} was successfully removed.")
         return people
     except:

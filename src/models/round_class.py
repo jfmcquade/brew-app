@@ -18,8 +18,7 @@ class Round:
 [3] Print "{self.name}".
 [4] Return to menu
 
-Enter your selection:
-"""
+Enter your selection:"""
         return round_menu_text
     
     # def activate_round(self):
@@ -29,7 +28,7 @@ Enter your selection:
     def add_all_preferences(self, preferences):
         for person, drink in preferences.items():
             self.orders[person] = drink
-        print("\nAll stored preferences added to round.")
+        print(f"\nAll stored preferences have been added to {self.name}.")
 
     def add_persons_preference_to_round(self, chosen_person):
         if chosen_person.preference != "":
@@ -42,7 +41,8 @@ Enter your selection:
         main.get_drinks(drinks)
         chosen_drink = drinks[int(input("\nPlease enter the number for a drink of your choice:\n")) - 1]
         self.orders[chosen_person.name] = chosen_drink
-        print("\nOrder added to round.")
+        main.clear_screen()
+        print(f"\n{chosen_person.name}'s order of {chosen_drink} has been added to {self.name}.")
 
     def add_to_round(self, people, drinks, preferences):
         try:
@@ -50,7 +50,7 @@ Enter your selection:
             main.get_people(people)
             chosen_person = people[int(input("\nPlease enter the number for a person whose order you would like to add:\n")) - 1]
             main.clear_screen()
-            add_to_round_input = input(f"\nWould you like to:\n\n[1] Add {chosen_person.name}'s stored preference\n[2] Select drink manually\n\nEnter your selection:")
+            add_to_round_input = input(f"\nWould you like to:\n\n[1] Add {chosen_person.name}'s stored preference\n[2] Select drink manually\n\nEnter your selection:\n")
             if add_to_round_input == "1":
                 main.clear_screen()
                 self.add_persons_preference_to_round(chosen_person)

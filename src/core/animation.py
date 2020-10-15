@@ -1,8 +1,8 @@
 from src.core.main import clear_screen
 import time
 
-app_name = "TeaRun 1.0"
-welcome_message = f"\nWelcome to {app_name} :)\n\nNow brewing"
+app_name = "TeaRun 2.0"
+welcome_message = f"\nWelcome to {app_name}\n\nNow brewing"
 
 fps = 6
 

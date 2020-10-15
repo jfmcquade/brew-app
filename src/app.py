@@ -141,6 +141,7 @@ def make_round(round_owner):
 
 def round_menu():
     # new_round = make_round(input("\nPlease enter a name for the round:\n"))
+    main.clear_screen()
     main.get_people(people)
     round_owner = people[int(input("\nWho is making this round? Please select from the people above using the relevant number:\n")) - 1]
     new_round = make_round(round_owner)
@@ -207,7 +208,8 @@ def main_menu():
         save_all()
         wait()
     elif command == EXIT_CMD:
-        print("\nExiting the programme, goodbye!\n")
+        main.clear_screen()
+        print(f"\nExiting {animation.app_name}, goodbye!\n")
         exit()
     else:
         invalid_input(command)

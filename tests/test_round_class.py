@@ -5,9 +5,10 @@ from src.models.person_class import Person
 
 
 class Test_Round(TestCase):
-    def test_round_add_all_preferences_method(self):
+    @mock.patch("src.models.person_class.Person")
+    def test_round_add_all_preferences_method(self, mock_person):
         # Arrange
-        test_round = Round("test_round")
+        test_round = Round(mock_person)
         preferences = {"key1":"value1", "key2":"value2"}
 
         # Act

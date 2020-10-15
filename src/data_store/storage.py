@@ -117,7 +117,7 @@ class File_Handling:
         cursor = connection.cursor()
         for person in people:
             person_list_of_attributes = [person.person_id, person.name, person.preference]
-            cursor.execute(f'''INSERT INTO People (person_id, name, preference) VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE name="{person.name}"''', person_list_of_attributes)
+            cursor.execute(f'''INSERT INTO People (person_id, name, preference) VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE name="{person.name}", preference="{person.preference}"''', person_list_of_attributes)
         for person in deleted_people:
             person_list_of_attributes = [person.person_id, person.name, person.preference]
             cursor.execute(f'''DELETE FROM People WHERE person_id={person.person_id} AND name="{person.name}"''')

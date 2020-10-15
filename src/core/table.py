@@ -9,7 +9,7 @@ def get_width(title, data):
 
 def tabulate(title, data): # Adds numbers
     width = get_width(title, data)
-    border = "+" + ("=" * width) + "+"
+    border = "+" + ("*" * width) + "+"
     print(f"\n{border}\n| {str(title).upper()}\n{border}")
     data_enum = list(enumerate(data, 1))
     for a_tuple in data_enum:
